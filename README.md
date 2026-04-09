@@ -1,11 +1,11 @@
-# 🚀 DevOps Challenge – SimpleTimeService
+# DevOps Challenge – SimpleTimeService
 
-## 📌 Overview
+## Overview
 
 This project demonstrates a complete DevOps workflow:
 
 * A minimal web application (`SimpleTimeService`)
-* Containerization using Docker (non-root user)
+* Containerization using Docker
 * Kubernetes deployment (Deployment + Service)
 * Infrastructure provisioning using Terraform (AWS VPC + EKS)
 
@@ -13,7 +13,7 @@ The goal is to showcase infrastructure-as-code, container best practices, and Ku
 
 ---
 
-## 🧱 Project Structure
+## Project Structure
 
 ```
 .
@@ -25,7 +25,7 @@ The goal is to showcase infrastructure-as-code, container best practices, and Ku
 
 ---
 
-## ⚙️ Prerequisites
+## Prerequisites
 
 Make sure the following tools are installed:
 
@@ -36,7 +36,7 @@ Make sure the following tools are installed:
 
 ---
 
-## 🔐 AWS Authentication
+## AWS Authentication
 
 Configure your AWS credentials:
 
@@ -48,11 +48,11 @@ Provide:
 
 * AWS Access Key
 * AWS Secret Key
-* Region (e.g., ap-south-1)
+* Region (ap-south-1)
 
 ---
 
-## 🐳 Build and Push Docker Image
+## Build and Push Docker Image
 
 Navigate to the app directory:
 
@@ -63,18 +63,18 @@ cd app
 Build the image:
 
 ```
-docker build -t <your-dockerhub-username>/simpletimeservice:latest .
+docker build -t <your-dockerhub-username>/simpletimeservice:v1.1 .
 ```
 
 Push to DockerHub:
 
 ```
-docker push <your-dockerhub-username>/simpletimeservice:latest
+docker push <your-dockerhub-username>/simpletimeservice:v1.1
 ```
 
 ---
 
-## ☁️ Deploy Infrastructure (Terraform)
+## Deploy Infrastructure (Terraform)
 
 Navigate to terraform directory:
 
@@ -108,13 +108,14 @@ This will create:
 
 ---
 
-## 🔗 Connect to EKS Cluster
+## Connect to EKS Cluster
 
 After deployment:
 
 ```
-aws eks update-kubeconfig --region ap-south-1 --name devops-challenge
+aws eks update-kubeconfig --region ap-south-1 --name sts-app
 ```
+
 
 Verify cluster access:
 
@@ -124,12 +125,15 @@ kubectl get nodes
 
 ---
 
-## 🚀 Deploy Application to Kubernetes
+## Deploy Application to Kubernetes
 
 Apply the manifest:
 
 ```
-kubectl apply -f microservice.yml
+kubectl apply -f deployment.yml
+```
+```
+kubectl apply -f service.yml
 ```
 
 Verify:
@@ -141,7 +145,7 @@ kubectl get svc
 
 ---
 
-## 🌐 Access the Application
+## Access the Application
 
 Since the service type is `ClusterIP`, use port forwarding:
 
@@ -166,7 +170,7 @@ Expected response:
 
 ---
 
-## 🛠️ Design Decisions
+## Design Decisions
 
 * **FastAPI (Python)** chosen for simplicity and performance
 * **Non-root container user** for security best practices
@@ -176,32 +180,14 @@ Expected response:
 
 ---
 
-## ⚠️ Notes
-
-* No secrets or credentials are stored in the repository
-* Ensure Docker image is publicly accessible
-* Terraform state is stored locally (can be extended to remote backend)
-
----
-
-## 🌟 Possible Improvements (Extra Credit)
-
-* Remote Terraform backend (S3 + DynamoDB)
-* Helm deployment via Terraform
-* CI/CD pipeline (GitHub Actions)
-* Monitoring stack (Prometheus/Grafana)
-* Ingress setup for external access
-
----
-
-## 👨‍💻 Author
+## Author
 
 Sai Kumar
 DevOps Engineer | AWS | Kubernetes | Terraform
 
 ---
 
-## ✅ Summary
+## Summary
 
 This project provides a complete, reproducible DevOps workflow:
 
