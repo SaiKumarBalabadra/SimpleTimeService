@@ -2,9 +2,9 @@ module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
   name = "devops-challenge-vpc"
-  cidr = "10.0.0.0/16"
+  cidr = var.vpc_cidr
 
-  azs             = ["ap-south-1a", "ap-south-1b"]
+  azs             = var.availability_zones
   public_subnets  = ["10.0.1.0/24", "10.0.2.0/24"]
   private_subnets = ["10.0.3.0/24", "10.0.4.0/24"]
 
@@ -15,7 +15,7 @@ module "vpc" {
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "~> 21.0"
-  name               = "devops-challenge"
+  name               = var.cluster_name
   kubernetes_version = "1.35"
 
   addons = {
@@ -39,11 +39,11 @@ module "eks" {
   eks_managed_node_groups = {
     default = {
       ami_type       = "AL2023_x86_64_STANDARD"
-      instance_types = ["m6a.large"]
+      instance_types = [var.node_instance_type]
 
-      min_size     = 2
-      max_size     = 2
-      desired_size = 2
+      min_size     = var.node_count
+      max_size     = var.node_count
+      desired_size = var.node_count
     }
   }
 }
