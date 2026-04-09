@@ -130,10 +130,14 @@ kubectl get nodes
 Apply the manifest:
 
 ```
-kubectl apply -f deployment.yml
+cd ../k8s
+```
+
+```
+kubectl apply -f deployment.yaml
 ```
 ```
-kubectl apply -f service.yml
+kubectl apply -f service.yaml
 ```
 
 Verify:
